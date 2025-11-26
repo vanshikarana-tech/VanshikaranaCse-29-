@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exp-5</title>
+</head>
+<body border="1">
+    <h1 align="center"> Student Registration Form</h1>
+    <form action="./response.html"  target= "_blank" name="Student Registration Form" method="">
+<fieldset>
+       <label for="name"> Name:</label>
+        <input type="text" id="name" name="name" placeholder="enter your name"required><br><br>
+         <label for="email"> Email:</label>
+       <input type="email" id="email" name="email" placeholder="enter your email"required><br><br>
+         <label for="password"> Enter your password:</label>
+    <input type="password" id="password" name="password" placeholder="enter your password" required><br><br>
+       <label for="gender"> Gender:</label>
+                <input type="radio" id="male" name="gender" value="male"required>
+                <label for ="male"> Male</label>
+                <input type="radio" id="female" name="gender" value="female"required>
+                <label for="female"> Female</label>
+                <input type="radio" id="other" name="gender" value="other"required>
+                <label for="other"> Other</label><br><br>
+    <label for="courses">Select Courses:</label>
+    <select id="courses" name="courses" required>
+        <option value="" disabled selected> Select your course</option>
+        <option value="btech"> B.tech</option>
+        <option value="bca"> BCA</option>
+        <option value="bsc"> Bsc</option>
+        <option value="mca"> MCA</option>
+        <option value="msc"> MSc</option>
+    </select><br><br>
+    <label for="tel"> Contact No:</label>
+       <input type="tel" id="tel" name="tel" placeholder="enter your contact no"required><br><br>
+    <label for="address">Address</label>
+    <input type="textarea" id="address" name="address" rows="4" cols="50" placeholder="enter your address" required><br><br>
+
+    <input type="submit" value="Submit" >
+    <input type="reset" value="Reset" >
+</fieldset>
+    </form>
+</body>
+</html>
