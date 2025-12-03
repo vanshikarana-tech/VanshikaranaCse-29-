@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container{
+        background-color: aqua;
+        border: 0px solid black;
+        height: 600px;
+        width: 600px;
+       flex-wrap:wrap;
+       justify-content: center;
+       gap: 10px;
+       align-content: center;
+       align-items: center;
+
+        }
+        .r1{
+            display:inline-block;
+         border: 2px solid black;
+         background-color: red;
+         height:100px;
+         width:100px;
+         margin:10px;
+         flex-direction: column;
+         text-align:center;
+         align-content: center;
+
+        
+        }
+        .r2{
+        display:inline-block;
+         border: 2px solid black;
+         background-color: red;
+           height:100px;
+         width:100px;
+         margin:10px;
+         flex-direction: column;
+         text-align:center;
+         align-content: center;
+         
+         flex-grow:20;
+         align-self: bottom;
+         flex-shrink: 1;
+
+        }
+        .r3{
+             display:inline-block;
+         border: 2px solid black;
+         background-color: red;
+           height:100px;
+         width:100px;
+         margin:10px;
+         flex-direction: column;
+         text-align:center;
+         align-content: center;
+         flex-grow:20;
+         align-self: bottom;
+         flex-shrink: 1;
+
+        }
+        .r4{
+             display:inline-block;
+         border: 2px solid black;
+         background-color: red;
+           height:100px;
+         width:100px;
+         margin:10px;
+         flex-direction: column;
+         text-align:center;
+         align-content: center;
+
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="r1">
+            item1
+        </div>
+        <div class="r2">
+            item2
+        </div>
+        <div class="r3">
+            item3
+        </div>
+        <div class="r4">
+            item4
+        </div>
+    </div>
+</body>
+</html>
