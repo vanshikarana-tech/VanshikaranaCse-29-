@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Profiles</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f4f4f4;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: row; /* Profiles side by side */
+      justify-content: space-around; /* Space between profiles */
+      align-items: flex-start;
+    }
+
+    .profile {
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      width: 40%;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .profile img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      margin-bottom: 15px;
+    }
+
+    .profile h2 {
+      margin: 10px 0;
+      color: #333;
+    }
+
+    .profile p {
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <h1>Student Profiles</h1>
+  <div class="container">
+    <!-- Profile 1 -->
+    <div class="profile">
+      <img src="https://via.placeholder.com/120" alt="Student 1">
+      <h2>John Doe</h2>
+      <p>Age: 20</p>
+      <p>Course: Computer Science</p>
+      <p>Email: john@example.com</p>
+    </div>
+
+    <!-- Profile 2 -->
+    <div class="profile">
+      <img src="https://via.placeholder.com/120" alt="Student 2">
+      <h2>Jane Smith</h2>
+      <p>Age: 21</p>
+      <p>Course: Information Technology</p>
+      <p>Email: jane@example.com</p>
+    </div>
+  </div>
+</body>
+</html>
+

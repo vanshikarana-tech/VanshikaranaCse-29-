@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        nav{
+
+    width: 100%;
+    height: 200px;
+    background-color: lightblue;
+    border: 2px solid navy;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+}
+.logo{
+    font-size: 24px;
+    font-weight: bold;
+    color: navy;
+}
+.menu{
+    text-decoration: none;
+    color: darkblue;
+    margin: 0 10px;
+    font-size: 18px;
+}
+.menu a{
+    text-decoration: none;
+    color: darkblue;
+    margin: 0 10px;
+    font-size: 18px;
+    display: block;
+}
+.hamburger{
+    font-size: 24px;
+    cursor: pointer;
+}
+
+@media (min-width: 768px) {
+   .menu{
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    right: 10px;
+    background-color: lightblue;
+    border: 2px solid navy;
+    padding: 10px;
+   }
+ .hamburger{
+    display: none;
+    .menu{
+    text-decoration: none;
+    color: darkblue;
+    margin: 0 10px;
+    font-size: 18px;
+}
+.menu a{
+    text-decoration: none;
+    color: darkblue;
+    margin: 0 10px;
+    font-size: 18px;
+    display: block;
+}
+}
+}
+
+</style>
+    </head>
+    </style>
+    <body>
+    <nav>
+        <div class="logo">MySite</div>
+        <div class="hamburger"><i class="fa fa-bars"></i>
+
+        </div>
+        <div class="menu">
+            <a href="#">Home</a>
+            <a href="#">About</a>           
+            <a href="#">Services</a>
+            <a href="#">Contact</a>
+
+
+        </div>
+    </nav>
+
+</div>
+    </body>
+</body>
+</html>
