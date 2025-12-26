@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Amazon Clone</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      background-color: #E3E6E6;
+    }
+
+    /* NAVBAR */
+
+    .navbar {
+      background-color: #131921;
+      color: white;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 10px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-left,
+    .nav-center,
+    .nav-right {
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-logo {
+      padding: 5px;
+      cursor: pointer;
+    }
+
+    .nav-logo span {
+      font-size: 24px;
+      font-weight: bold;
+      color: #FF9900;
+    }
+
+    .border {
+      border: 1px solid transparent;
+      padding: 5px;
+    }
+
+    .border:hover {
+      border: 1px solid white;
+      border-radius: 2px;
+    }
+
+    /* Location */
+
+    .nav-location {
+      display: flex;
+      flex-direction: column;
+      margin-left: 10px;
+      font-size: 12px;
+    }
+
+    .nav-location span:nth-child(1) {
+      color: #cccccc;
+    }
+
+    .nav-location span:nth-child(2) {
+      font-weight: 700;
+    }
+
+    /* Search */
+
+    .nav-search {
+      display: flex;
+      flex: 1;
+      margin: 0 10px;
+      max-width: 650px;
+    }
+
+    .nav-search select {
+      padding: 8px;
+      border: none;
+      background-color: #f3f3f3;
+      font-size: 14px;
+      border-radius: 4px 0 0 4px;
+      outline: none;
+    }
+
+    .nav-search input {
+      flex: 1;
+      padding: 8px;
+      border: none;
+      font-size: 14px;
+      outline: none;
+    }
+
+    .nav-search button {
+      padding: 8px 14px;
+      border: none;
+      background-color: #febd69;
+      font-size: 16px;
+      border-radius: 0 4px 4px 0;
+      cursor: pointer;
+    }
+
+    .nav-search button:hover {
+      background-color: #f3a847;
+    }
+
+    /* Right - account, orders, cart */
+
+    .nav-option {
+      display: flex;
+      flex-direction: column;
+      font-size: 12px;
+      margin: 0 6px;
+      cursor: pointer;
+    }
+
+    .nav-option span:nth-child(2) {
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .nav-cart {
+      display: flex;
+      align-items: center;
+      margin-left: 10px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .nav-cart span {
+      font-size: 20px;
+      margin-right: 4px;
+    }
+
+    /* SECOND NAVBAR */
+
+    .panel {
+      background-color: #232F3E;
+      color: white;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      padding: 0 10px;
+      font-size: 14px;
+      gap: 10px;
+    }
+
+    .panel-option {
+      padding: 4px 6px;
+      cursor: pointer;
+    }
+
+    .panel-option:hover {
+      border: 1px solid white;
+      border-radius: 2px;
+    }
+
+    .panel-deals {
+      margin-left: auto;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* HERO SECTION */
+
+    .hero {
+      background-image: url("https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1600&q=80");
+      background-size: cover;
+      background-position: center;
+      height: 350px;
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+    }
+
+    .hero-msg {
+      background-color: white;
+      color: black;
+      padding: 10px 20px;
+      margin: 20px;
+      font-size: 14px;
+      border-radius: 4px;
+      text-align: center;
+      width: 80%;
+      max-width: 900px;
+    }
+
+    .hero-msg a {
+      color: #007185;
+      text-decoration: none;
+    }
+
+    .hero-msg a:hover {
+      color: #c7511f;
+      text-decoration: underline;
+    }
+
+    /* SHOP SECTION */
+
+    .shop-section {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      padding: 20px;
+      margin-top: -60px;
+    }
+
+    .box {
+      background-color: white;
+      padding: 20px;
+      border-radius: 4px;
+      box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .box h2 {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    .box-img {
+      background-color: #e3e6e6;
+      height: 200px;
+      margin: 10px 0;
+      border-radius: 4px;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .box a {
+      font-size: 14px;
+      color: #007185;
+      text-decoration: none;
+    }
+
+    .box a:hover {
+      color: #c7511f;
+      text-decoration: underline;
+    }
+
+    /* FOOTER */
+
+    .footer-top {
+      background-color: #37475A;
+      color: white;
+      text-align: center;
+      padding: 10px 0;
+      margin-top: 20px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .footer-top:hover {
+      background-color: #485769;
+    }
+
+    .footer-main {
+      background-color: #232F3E;
+      color: white;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 20px;
+      padding: 30px 20px;
+      font-size: 14px;
+    }
+
+    .footer-main h3 {
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+
+    .footer-main ul {
+      list-style: none;
+    }
+
+    .footer-main li {
+      margin-bottom: 6px;
+      cursor: pointer;
+      color: #dddddd;
+    }
+
+    .footer-main li:hover {
+      text-decoration: underline;
+    }
+
+    .footer-bottom {
+      background-color: #131A22;
+      color: #dddddd;
+      text-align: center;
+      padding: 15px 10px;
+      font-size: 12px;
+    }
+
+    .footer-bottom span {
+      margin: 0 5px;
+      cursor: pointer;
+    }
+
+    .footer-bottom span:hover {
+      text-decoration: underline;
+    }
+
+    /* RESPONSIVE SMALL SCREENS */
+
+    @media (max-width: 768px) {
+      .nav-location {
+        display: none;
+      }
+
+      .nav-search {
+        max-width: none;
+      }
+
+      .panel {
+        font-size: 12px;
+        overflow-x: auto;
+        white-space: nowrap;
+      }
+
+      .hero-msg {
+        width: 95%;
+        font-size: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="nav-left">
+      <div class="nav-logo border">
+        <span>amazon</span><span style="font-size:16px;">.in</span>
+      </div>
+
+      <div class="nav-location border">
+        <span>Hello</span>
+        <span>Select your address</span>
+      </div>
+    </div>
+
+    <div class="nav-center">
+      <form class="nav-search">
+        <select>
+          <option>All</option>
+          <option>Electronics</option>
+          <option>Fashion</option>
+          <option>Books</option>
+        </select>
+        <input type="text" placeholder="Search Amazon.in">
+        <button type="submit">🔍</button>
+      </form>
+    </div>
+
+    <div class="nav-right">
+      <div class="nav-option border">
+        <span>Hello, sign in</span>
+        <span>Account &amp; Lists</span>
+      </div>
+
+      <div class="nav-option border">
+        <span>Returns</span>
+        <span>&amp; Orders</span>
+      </div>
+
+      <div class="nav-cart border">
+        <span>🛒</span>
+        <span>Cart</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- SECOND NAVBAR -->
+  <div class="panel">
+    <div class="panel-option">☰ All</div>
+    <div class="panel-option">Best Sellers</div>
+    <div class="panel-option">Mobiles</div>
+    <div class="panel-option">Today's Deals</div>
+    <div class="panel-option">Electronics</div>
+    <div class="panel-option">Prime</div>
+    <div class="panel-option">Fashion</div>
+    <div class="panel-deals">Shop deals in Electronics</div>
+  </div>
+
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <div class="hero-msg">
+      <p>You are on amazon clone. You can also shop on Amazon India for millions of products with fast local delivery.</p>
+      <p><a href="#">Click here to go to amazon.in</a></p>
+    </div>
+  </section>
+
+  <!-- SHOP SECTION -->
+  <section class="shop-section">
+    <div class="box">
+      <h2>Clothes &amp; Fashion</h2>
+      <div class="box-img" style="background-image:url('https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=600&q=80');"></div>
+      <a href="#">See more</a>
+    </div>
+
+    <div class="box">
+      <h2>Health &amp; Personal Care</h2>
+      <div class="box-img" style="background-image:url('https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=600&q=80');"></div>
+      <a href="#">See more</a>
+    </div>
+
+    <div class="box">
+      <h2>Home Appliances</h2>
+      <div class="box-img" style="background-image:url('https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=600&q=80');"></div>
+      <a href="#">See more</a>
+    </div>
+
+    <div class="box">
+      <h2>Mobiles &amp; Gadgets</h2>
+      <div class="box-img" style="background-image:url('https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=600&q=80');"></div>
+      <a href="#">See more</a>
+    </div>
+
+    <div class="box">
+      <h2>Furniture</h2>
+      <div class="box-img" style="background-image:url('https://images.unsplash.com/photo-1484100356142-db6ab6244067?auto=format&fit=crop&w=600&q=80');"></div>
+      <a href="#">See more</a>
+    </div>
+
+    <div class="box">
+      <h2>Beauty Picks</h2>
+      <div class="box-img" style="background-image:url('https://images.unsplash.com/photo-1524230713813-1bff2e9ae9f5?auto=format&fit=crop&w=600&q=80');"></div>
+      <a href="#">See more</a>
+    </div>
+
+    <div class="box">
+      <h2>Sports &amp; Fitness</h2>
+      <div class="box-img" style="background-image:url('https://images.unsplash.com/photo-1534367507873-d2d7e24c797f?auto=format&fit=crop&w=600&q=80');"></div>
+      <a href="#">See more</a>
+    </div>
+
+    <div class="box">
+      <h2>Groceries</h2>
+      <div class="box-img" style="background-image:url('https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=600&q=80');"></div>
+      <a href="#">See more</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-top">
+      Back to top
+    </div>
+
+    <div class="footer-main">
+      <div>
+        <h3>Get to Know Us</h3>
+        <ul>
+          <li>About Us</li>
+          <li>Careers</li>
+          <li>Press Releases</li>
+          <li>Amazon Science</li>
+        </ul>
+      </div>
+
+      <div>
+        <h3>Connect with Us</h3>
+        <ul>
+          <li>Facebook</li>
+          <li>Twitter</li>
+          <li>Instagram</li>
+        </ul>
+      </div>
+
+      <div>
+        <h3>Make Money with Us</h3>
+        <ul>
+          <li>Sell on Amazon</li>
+          <li>Sell under Amazon Accelerator</li>
+          <li>Protect and Build Your Brand</li>
+          <li>Amazon Global Selling</li>
+        </ul>
+      </div>
+
+      <div>
+        <h3>Let Us Help You</h3>
+        <ul>
+          <li>COVID-19 and Amazon</li>
+          <li>Your Account</li>
+          <li>Returns Centre</li>
+          <li>Help</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>Conditions of Use &amp; Sale</span>
+      <span>Privacy Notice</span>
+      <span>Interest-Based Ads</span>
+      <p>© 2025 Amazon Clone by You</p>
+    </div>
+  </footer>
+</body>
+</html>

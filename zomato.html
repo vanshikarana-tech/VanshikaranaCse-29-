@@ -1,0 +1,1237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Zomato Clone – Food Discovery</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    /* ---------- RESET ---------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, sans-serif;
+    }
+
+    body {
+      background: #ffffff;
+      color: #1c1c1c;
+      line-height: 1.5;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    :root {
+      --primary: #ff2e4d;
+      --primary-soft: #ffe4e9;
+      --dark: #1c1c1c;
+      --muted: #686b78;
+      --bg-light: #f8f8f8;
+      --card-radius: 16px;
+      --shadow-soft: 0 8px 24px rgba(0, 0, 0, 0.08);
+    }
+
+    /* ---------- LAYOUT HELPERS ---------- */
+    .container {
+      width: 90%;
+      max-width: 1150px;
+      margin: 0 auto;
+    }
+
+    section {
+      padding: 40px 0;
+    }
+
+    /* ---------- NAVBAR ---------- */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid #eee;
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .logo {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--primary);
+      letter-spacing: 0.04em;
+    }
+
+    .nav-location {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.9rem;
+      color: var(--muted);
+      cursor: pointer;
+    }
+
+    .nav-location span.city {
+      font-weight: 600;
+      color: var(--dark);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .nav-links a {
+      position: relative;
+      padding-bottom: 4px;
+      transition: color 0.25s ease;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0%;
+      height: 2px;
+      background: var(--primary);
+      transition: width 0.25s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    /* ---------- HERO SECTION ---------- */
+    .hero {
+      background: radial-gradient(circle at top left, #ffe8ec 0%, #ffffff 45%);
+      padding: 60px 0 50px;
+    }
+
+    .hero-inner {
+      display: grid;
+      grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+      gap: 40px;
+      align-items: center;
+    }
+
+    .hero-title {
+      font-size: 2.6rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .hero-title span {
+      color: var(--primary);
+    }
+
+    .hero-subtitle {
+      color: var(--muted);
+      margin-bottom: 26px;
+      max-width: 480px;
+      font-size: 0.95rem;
+    }
+
+    .search-box {
+      background: #ffffff;
+      border-radius: 999px;
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      align-items: center;
+      padding: 8px 10px;
+      gap: 10px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+
+    .search-location,
+    .search-input {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: #f8f8f8;
+      flex: 1;
+      min-width: 180px;
+    }
+
+    .search-location span.label,
+    .search-input span.label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+
+    .search-location input,
+    .search-input input {
+      border: none;
+      background: transparent;
+      outline: none;
+      font-size: 0.85rem;
+      width: 100%;
+    }
+
+    .search-location-icon {
+      width: 9px;
+      height: 12px;
+      border-radius: 2px;
+      border: 2px solid var(--primary);
+      position: relative;
+    }
+
+    .search-location-icon::after {
+      content: "";
+      position: absolute;
+      bottom: -5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 2px;
+      height: 5px;
+      background: var(--primary);
+      border-radius: 4px;
+    }
+
+    .search-btn {
+      background: var(--primary);
+      color: #ffffff;
+      padding: 11px 20px;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: background 0.25s ease, transform 0.15s ease,
+        box-shadow 0.15s ease;
+      box-shadow: 0 8px 18px rgba(255, 46, 77, 0.3);
+      white-space: nowrap;
+    }
+
+    .search-btn:hover {
+      background: #e6203e;
+      transform: translateY(-1px);
+      box-shadow: 0 10px 22px rgba(255, 46, 77, 0.35);
+    }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+      font-size: 0.8rem;
+    }
+
+    .tag-pill {
+      padding: 6px 12px;
+      background: #ffffff;
+      border-radius: 999px;
+      border: 1px solid #f0f0f0;
+      color: var(--muted);
+      cursor: pointer;
+      transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease,
+        transform 0.15s ease;
+    }
+
+    .tag-pill:hover {
+      background: var(--primary-soft);
+      border-color: var(--primary);
+      color: var(--primary);
+      transform: translateY(-1px);
+    }
+
+    .hero-image {
+      position: relative;
+      min-height: 260px;
+    }
+
+    .hero-card {
+      position: absolute;
+      inset: 0;
+      border-radius: 32px;
+      overflow: hidden;
+      background: linear-gradient(135deg, #ff6a88, #ffb199);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 22px 20px;
+      color: #ffffff;
+      box-shadow: 0 20px 35px rgba(0, 0, 0, 0.12);
+    }
+
+    .hero-card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .hero-delivery-tag {
+      background: rgba(0, 0, 0, 0.18);
+      border-radius: 999px;
+      padding: 5px 10px;
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .hero-rating {
+      background: rgba(0, 0, 0, 0.27);
+      border-radius: 999px;
+      padding: 5px 10px;
+      font-size: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .hero-card-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-top: 18px;
+      max-width: 170px;
+    }
+
+    .hero-card-sub {
+      font-size: 0.8rem;
+      opacity: 0.95;
+      margin-top: 6px;
+      max-width: 190px;
+    }
+
+    .hero-bottom-strip {
+      background: rgba(255, 255, 255, 0.16);
+      border-radius: 999px;
+      padding: 8px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      margin-top: 18px;
+    }
+
+    .hero-bottom-pill {
+      background: rgba(0, 0, 0, 0.18);
+      border-radius: 999px;
+      padding: 5px 10px;
+      font-size: 0.7rem;
+    }
+
+    /* ---------- CATEGORY CARDS ---------- */
+    .section-title {
+      font-size: 1.4rem;
+      margin-bottom: 6px;
+    }
+
+    .section-subtitle {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .category-card {
+      position: relative;
+      border-radius: 18px;
+      overflow: hidden;
+      cursor: pointer;
+      box-shadow: var(--shadow-soft);
+      background: #ffffff;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .category-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+    }
+
+    .category-image {
+      height: 150px;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .cat-bg-1 {
+      background-image: linear-gradient(
+          120deg,
+          rgba(0, 0, 0, 0.35),
+          rgba(0, 0, 0, 0.1)
+        ),
+        url("https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg?auto=compress&cs=tinysrgb&w=800");
+    }
+
+    .cat-bg-2 {
+      background-image: linear-gradient(
+          120deg,
+          rgba(0, 0, 0, 0.35),
+          rgba(0, 0, 0, 0.1)
+        ),
+        url("https://images.pexels.com/photos/76093/pexels-photo-76093.jpeg?auto=compress&cs=tinysrgb&w=800");
+    }
+
+    .cat-bg-3 {
+      background-image: linear-gradient(
+          120deg,
+          rgba(0, 0, 0, 0.35),
+          rgba(0, 0, 0, 0.1)
+        ),
+        url("https://images.pexels.com/photos/958545/pexels-photo-958545.jpeg?auto=compress&cs=tinysrgb&w=800");
+    }
+
+    .category-text {
+      padding: 14px 14px 16px;
+    }
+
+    .category-text h3 {
+      font-size: 1rem;
+      margin-bottom: 4px;
+    }
+
+    .category-text p {
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    /* ---------- COLLECTIONS SECTION ---------- */
+    .collections {
+      background: #ffffff;
+    }
+
+    .collections-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 12px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+
+    .collections-link {
+      font-size: 0.85rem;
+      color: var(--primary);
+      cursor: pointer;
+    }
+
+    .collections-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .collection-card {
+      position: relative;
+      border-radius: 14px;
+      overflow: hidden;
+      height: 190px;
+      cursor: pointer;
+      background-position: center;
+      background-size: cover;
+      color: #ffffff;
+      box-shadow: var(--shadow-soft);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .collection-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    .collection-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0.7),
+        rgba(0, 0, 0, 0.15)
+      );
+    }
+
+    .collection-content {
+      position: absolute;
+      inset: 0;
+      padding: 12px 12px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      z-index: 1;
+    }
+
+    .collection-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .collection-sub {
+      font-size: 0.78rem;
+      opacity: 0.9;
+    }
+
+    .col-bg-1 {
+      background-image: url("https://images.pexels.com/photos/958545/pexels-photo-958545.jpeg?auto=compress&cs=tinysrgb&w=800");
+    }
+
+    .col-bg-2 {
+      background-image: url("https://images.pexels.com/photos/262978/pexels-photo-262978.jpeg?auto=compress&cs=tinysrgb&w=800");
+    }
+
+    .col-bg-3 {
+      background-image: url("https://images.pexels.com/photos/1398688/pexels-photo-1398688.jpeg?auto=compress&cs=tinysrgb&w=800");
+    }
+
+    .col-bg-4 {
+      background-image: url("https://images.pexels.com/photos/958545/pexels-photo-958545.jpeg?auto=compress&cs=tinysrgb&w=800");
+    }
+
+    /* ---------- POPULAR AREAS ---------- */
+    .popular {
+      background: var(--bg-light);
+    }
+
+    .pill-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .pill {
+      border-radius: 12px;
+      background: #ffffff;
+      padding: 12px 14px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.04);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+      transition: transform 0.15s ease, box-shadow 0.15s ease,
+        background 0.2s ease;
+    }
+
+    .pill:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+      background: #fff7f8;
+    }
+
+    .pill span.count {
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+
+    /* ---------- DOWNLOAD APP SECTION ---------- */
+    .download {
+      background: #ffffff;
+    }
+
+    .download-inner {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 30px;
+      align-items: center;
+    }
+
+    .download-title {
+      font-size: 1.5rem;
+      margin-bottom: 8px;
+    }
+
+    .download-sub {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+
+    .store-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .store-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+      padding: 8px 12px;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.15s ease,
+        box-shadow 0.2s ease;
+      background: #ffffff;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
+    }
+
+    .store-btn:hover {
+      background: #fdf3f5;
+      transform: translateY(-1px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+    }
+
+    .store-logo {
+      width: 26px;
+      height: 26px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #222, #555);
+    }
+
+    .store-text span.label {
+      font-size: 0.7rem;
+      color: var(--muted);
+    }
+
+    .store-text span.name {
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .download-mock {
+      border-radius: 24px;
+      border: 1px solid #eee;
+      padding: 14px;
+      background: radial-gradient(circle at top left, #ffe8eb, #ffffff);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .download-screen {
+      border-radius: 18px;
+      background: #ffffff;
+      padding: 10px;
+      height: 260px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .mock-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    .mock-restaurant {
+      margin-top: 10px;
+      border-radius: 12px;
+      background: linear-gradient(125deg, #ff6a88, #ffb199);
+      padding: 12px;
+      color: #ffffff;
+    }
+
+    .mock-restaurant h4 {
+      font-size: 0.9rem;
+      margin-bottom: 4px;
+    }
+
+    .mock-restaurant p {
+      font-size: 0.75rem;
+      opacity: 0.95;
+    }
+
+    .mock-list {
+      margin-top: 8px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      font-size: 0.7rem;
+    }
+
+    .mock-chip {
+      border-radius: 999px;
+      padding: 3px 8px;
+      background: #fff0f3;
+      color: var(--primary);
+      text-align: center;
+    }
+
+    /* ---------- FOOTER ---------- */
+    .footer {
+      background: #0d0d0f;
+      color: #ffffff;
+      padding: 30px 0 18px;
+      margin-top: 30px;
+    }
+
+    .footer-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .footer-logo {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .footer-lang {
+      display: flex;
+      gap: 10px;
+    }
+
+    .footer-pill {
+      border-radius: 8px;
+      border: 1px solid #ffffff44;
+      padding: 6px 10px;
+      font-size: 0.78rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .footer-columns {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+      margin-bottom: 20px;
+      font-size: 0.8rem;
+    }
+
+    .footer-col h4 {
+      font-size: 0.85rem;
+      margin-bottom: 8px;
+    }
+
+    .footer-col a {
+      display: block;
+      color: #c9c9c9;
+      margin-bottom: 5px;
+      transition: color 0.2s ease;
+    }
+
+    .footer-col a:hover {
+      color: #ffffff;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid #2b2b2b;
+      padding-top: 10px;
+      font-size: 0.75rem;
+      color: #aaaaaa;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 992px) {
+      .hero-inner,
+      .download-inner {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-image {
+        order: -1;
+      }
+
+      .collections-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .card-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .pill-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }/* FEATURED RESTAURANTS */
+.featured {
+  background: #fff;
+}
+.rest-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.rest-card {
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+  transition: 0.3s;
+}
+.rest-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+}
+.rest-img {
+  height: 160px;
+  background-size: cover;
+  background-position: center;
+}
+.rest-info {
+  padding: 12px;
+}
+.rest-meta {
+  display: flex;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+.rest-offer {
+  color: var(--primary);
+  font-weight: 600;
+  margin-top: 6px;
+}
+
+/* CHEF SPECIALS */
+.specials {
+  background: #f8f8f8;
+}
+.specials-row {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.special-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 14px;
+  width: 30%;
+  box-shadow: var(--shadow-soft);
+  text-align: center;
+  transition: 0.3s;
+}
+.special-card:hover {
+  transform: scale(1.05);
+}
+.special-card img {
+  width: 100%;
+  border-radius: 12px;
+}
+.price {
+  display: inline-block;
+  margin-top: 8px;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+/* TESTIMONIALS */
+.testimonials {
+  background: #fff;
+}
+.test-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.test-card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: var(--shadow-soft);
+  font-style: italic;
+}
+
+/* NEWSLETTER */
+.newsletter {
+  background: #ffe8ec;
+  text-align: center;
+  padding: 40px 0;
+}
+.newsletter-form {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+.newsletter-form input {
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+.newsletter-form button {
+  background: var(--primary);
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+
+/* CONTACT */
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.contact-grid h3 {
+  margin-bottom: 6px;
+}
+
+
+    @media (max-width: 720px) {
+      .nav-links {
+        display: none;
+      }
+
+      .hero-title {
+        font-size: 2rem;
+      }
+
+      .search-box {
+        border-radius: 18px;
+      }
+
+      .collections-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .card-grid,
+      .pill-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-columns {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 480px) {
+      .collections-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-columns {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-inner {
+        gap: 28px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="container nav-inner">
+      <div class="nav-left">
+        <div class="logo">zomato</div>
+        <div class="nav-location">
+          <div class="search-location-icon"></div>
+          <span class="city">Ghaziabad</span>
+          <span>|</span>
+          <span>UP, India</span>
+        </div>
+      </div>
+      <nav class="nav-links">
+        <a href="#">Investor Relations</a>
+        <a href="#">Add restaurant</a>
+        <a href="#">Log in</a>
+        <a href="#">Sign up</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container hero-inner">
+      <div>
+        <h1 class="hero-title">
+          Discover the best food & drinks in <span>Ghaziabad</span>
+        </h1>
+        <p class="hero-subtitle">
+          Explore top-rated restaurants, cafés, and street food around you. Order online,
+          dine out, or grab a quick bite.
+        </p>
+
+        <div class="search-box">
+          <div class="search-location">
+            <div class="search-location-icon"></div>
+            <div>
+              <span class="label">Location</span>
+              <input type="text" placeholder="Ghaziabad, Uttar Pradesh" />
+            </div>
+          </div>
+          <div class="search-input">
+            <span class="label">Search</span>
+            <input
+              type="text"
+              placeholder="Search for restaurant, cuisine or a dish"
+            />
+          </div>
+          <button class="search-btn">Search</button>
+        </div>
+
+        <div class="hero-tags">
+          <div class="tag-pill">🍕 Pizza near me</div>
+          <div class="tag-pill">🍔 Burgers</div>
+          <div class="tag-pill">🧋 Fast food</div>
+          <div class="tag-pill">☕ Cafés</div>
+        </div>
+      </div>
+
+      <div class="hero-image">
+        <div class="hero-card">
+          <div class="hero-card-top">
+            <div>
+              <div class="hero-delivery-tag">Delivery in 30 mins</div>
+              <h3 class="hero-card-title">Midnight Bites, Raj Nagar</h3>
+              <p class="hero-card-sub">
+                Pizzas • Burgers • Shakes & more – trending in your area.
+              </p>
+            </div>
+            <div class="hero-rating">
+              <span>⭐ 4.4</span>
+              <span>•</span>
+              <span>2.1k+ ratings</span>
+            </div>
+          </div>
+
+          <div class="hero-bottom-strip">
+            <span>Use code <b>WELCOME100</b> for your first order</span>
+            <span class="hero-bottom-pill">Up to 50% OFF</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ORDER MODES -->
+  <section class="container">
+    <h2 class="section-title">Order for every mood</h2>
+    <p class="section-subtitle">Choose how you want to enjoy your food today.</p>
+
+    <div class="card-grid">
+      <article class="category-card">
+        <div class="category-image cat-bg-1"></div>
+        <div class="category-text">
+          <h3>Order Online</h3>
+          <p>Stay in and order from the best restaurants around you.</p>
+        </div>
+      </article>
+
+      <article class="category-card">
+        <div class="category-image cat-bg-2"></div>
+        <div class="category-text">
+          <h3>Dining Out</h3>
+          <p>Experience top ambience, great food, and live music.</p>
+        </div>
+      </article>
+
+      <article class="category-card">
+        <div class="category-image cat-bg-3"></div>
+        <div class="category-text">
+          <h3>Nightlife & Clubs</h3>
+          <p>Discover bars, lounges, and clubs for your weekends.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- COLLECTIONS -->
+  <section class="collections">
+    <div class="container">
+      <div class="collections-header">
+        <div>
+          <h2 class="section-title">Collections in Ghaziabad</h2>
+          <p class="section-subtitle">
+            Explore curated lists of top restaurants, cafés, and dishes.
+          </p>
+        </div>
+        <div class="collections-link">All collections &rarr;</div>
+      </div>
+
+      <div class="collections-grid">
+        <div class="collection-card col-bg-1">
+          <div class="collection-content">
+            <div class="collection-title">Best of Raj Nagar</div>
+            <div class="collection-sub">18 places &bull; Trending now</div>
+          </div>
+        </div>
+
+        <div class="collection-card col-bg-2">
+          <div class="collection-content">
+            <div class="collection-title">Budget-friendly spots</div>
+            <div class="collection-sub">30 places &bull; Under ₹300</div>
+          </div>
+        </div>
+
+        <div class="collection-card col-bg-3">
+          <div class="collection-content">
+            <div class="collection-title">Romantic rooftop cafés</div>
+            <div class="collection-sub">8 places &bull; Great views</div>
+          </div>
+        </div>
+
+        <div class="collection-card col-bg-4">
+          <div class="collection-content">
+            <div class="collection-title">Legendary street food</div>
+            <div class="collection-sub">25 places &bull; Must-try</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- POPULAR LOCALITIES -->
+  <section class="popular">
+    <div class="container">
+      <h2 class="section-title">Popular localities in and around Ghaziabad</h2>
+      <p class="section-subtitle">
+        Explore restaurants and cafés across the most loved localities.
+      </p>
+
+      <div class="pill-grid">
+        <div class="pill">
+          <div>Raj Nagar</div>
+          <span class="count">56 places</span>
+        </div>
+        <div class="pill">
+          <div>Indirapuram</div>
+          <span class="count">102 places</span>
+        </div>
+        <div class="pill">
+          <div>Vaishali</div>
+          <span class="count">73 places</span>
+        </div>
+        <div class="pill">
+          <div>Kaushambi</div>
+          <span class="count">40 places</span>
+        </div>
+        <div class="pill">
+          <div>Crossings Republik</div>
+          <span class="count">33 places</span>
+        </div>
+        <div class="pill">
+          <div>Vasundhara</div>
+          <span class="count">51 places</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DOWNLOAD APP -->
+  <section class="download">
+    <div class="container download-inner">
+      <div>
+        <h2 class="download-title">Get the Zomato app</h2>
+        <p class="download-sub">
+          We’ll send you a link, open it on your phone to download the app and start
+          exploring restaurants around you.
+        </p>
+
+        <div class="store-buttons">
+          <div class="store-btn">
+            <div class="store-logo"></div>
+            <div class="store-text">
+              <span class="label">GET IT ON</span><br />
+              <span class="name">Google Play</span>
+            </div>
+          </div>
+          <div class="store-btn">
+            <div class="store-logo"></div>
+            <div class="store-text">
+              <span class="label">Download on the</span><br />
+              <span class="name">App Store</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="download-mock">
+        <div class="download-screen">
+          <div class="mock-header">
+            <span>Nearby • Ghaziabad</span>
+            <span>⭐ 4.7</span>
+          </div>
+          <div class="mock-restaurant">
+            <h4>Spice Route Kitchen</h4>
+            <p>North Indian • Chinese • Fast Food</p>
+          </div>
+          <div class="mock-list">
+            <div class="mock-chip">Free delivery</div>
+            <div class="mock-chip">50% OFF up to ₹120</div>
+            <div class="mock-chip">30 mins</div>
+            <div class="mock-chip">Pure veg options</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-logo">zomato</div>
+        <div class="footer-lang">
+          <div class="footer-pill">🌐 India</div>
+          <div class="footer-pill">🇬🇧 English</div>
+        </div>
+      </div>
+
+      <div class="footer-columns">
+        <div class="footer-col">
+          <h4>About Zomato</h4>
+          <a href="#">Who we are</a>
+          <a href="#">Blog</a>
+          <a href="#">Careers</a>
+          <a href="#">Investor relations</a>
+        </div>
+        <div class="footer-col">
+          <h4>Zomaverse</h4>
+          <a href="#">Zomato</a>
+          <a href="#">Blinkit</a>
+          <a href="#">Feeding India</a>
+        </div>
+        <div class="footer-col">
+          <h4>For Restaurants</h4>
+          <a href="#">Partner with us</a>
+          <a href="#">Apps for you</a>
+        </div>
+        <div class="footer-col">
+          <h4>Learn more</h4>
+          <a href="#">Privacy</a>
+          <a href="#">Security</a>
+          <a href="#">Terms</a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>By continuing past this page, you agree to our Terms of Service, Cookie Policy, Privacy Policy and Content Policies.</span>
+        <span>© 2025 Zomato Clone for Practice. All rights reserved.</span>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
